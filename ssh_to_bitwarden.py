@@ -12,7 +12,7 @@ arguments = sys.argv
 
 assert (
     len(arguments) == 4
-), "Expected: rsa_to_bitwarden.py bitwarden_item field_key rsa_path"
+), "Expected: ./ssh_to_bitwarden.py bitwarden_item field_key rsa_path"
 
 bitwarden_item = arguments[1]
 field_key = arguments[2]
@@ -31,10 +31,11 @@ with open(rsa_path, "r") as f:
 for index, line in enumerate(rsa_lines):
     data = {
         "name": f"private_key_{index}",
-        "value": line[:-2],
+        "value": line[:-1],
         "type": 1,
     }
     item_data["fields"].append(data)
+    print(f'{{{{- (bitwardenFields "item" "{bitwarden_item}").private_key_{index}.value -}}}}')
 
 subprocess.run(
     [
