@@ -11,5 +11,5 @@ Cassandra;46
 
 file = StringIO(csv)
 
-df = pd.read_csv(file)
+df = pd.read_csv(file, delimiter=";")
 df.to_parquet('data.parquet')
